@@ -37,6 +37,7 @@ void logger::log_message(log_level level, const char* msg, ...)
     char msg_out2[32000];
     sprintf(msg_out2, "[%s][%s]: %s\n", m_name.c_str(), level_string[level],
             msg_out);
-    std::cout << msg_out2;
+    // std::cout << msg_out2;
+    console_write(level, msg_out2);
 }
 }  // namespace mnt

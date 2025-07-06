@@ -1,5 +1,7 @@
 #include <mint/mint.hpp>
 
+#include "mint/core/logger.hpp"
+
 class test_app : public mnt::application
 {
    public:
@@ -19,8 +21,12 @@ int main(void)
 
     e.initialize(app);
 
-    MINT_FATAL("this is fatal message");
-    MINT_ASSERT(false, "testing");
+    MINT_FATAL("FATAL");
+    MINT_ERROR("ERROR");
+    MINT_WARN("WARN");
+    MINT_INFO("INFO");
+    MINT_DEBUG("DEBUG");
+    MINT_TRACE("TRACE");
 
     e.run();
     e.shutdown();

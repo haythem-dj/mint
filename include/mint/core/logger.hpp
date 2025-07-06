@@ -28,6 +28,9 @@ class MINT_API logger
     void log_message(log_level level, const char* message, ...);
 
    private:
+    void console_write(log_level leve, const char* msg);
+
+   private:
     b8 m_is_initialized = false;
     std::string m_name;
 };
