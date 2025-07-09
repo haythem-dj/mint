@@ -26,6 +26,7 @@ class MINT_API logger
     void shutdown();
 
     void log_message(log_level level, const char* message, ...);
+    void log_message(log_level level, const std::string& message);
 
    private:
     void console_write(log_level leve, const char* msg);

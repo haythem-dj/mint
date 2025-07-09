@@ -4,6 +4,9 @@
 
 #include "mint/core/logger.hpp"
 
+#include "mint/event/event.hpp"
+#include "mint/event/window_events.hpp"
+
 namespace mnt
 {
     class application;
@@ -21,6 +24,8 @@ namespace mnt
         b8 initialize(application* app);
         void shutdown();
 
+        void on_event(event& e);
+
         void run();
 
         inline application& get_app() { return *m_app; }
@@ -31,6 +36,8 @@ namespace mnt
 
         void update(f32 dt);
         void render();
+
+        bool on_window_close(window_close& wc);
     
     private:
         b8 m_is_initialized = false;

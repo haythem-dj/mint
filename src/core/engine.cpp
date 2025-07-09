@@ -38,6 +38,16 @@ namespace mnt
         m_logger.shutdown();
     }
 
+    void engine::on_event(event& e)
+    {
+        event_dispatcher dispatcher(e);
+        dispatcher.dispatch<window_close>(
+            [this](window_close& e) {
+                return this->on_window_close(e);
+            }
+        );
+    }
+
     void engine::run()
     {}
 
@@ -46,4 +56,9 @@ namespace mnt
 
     void engine::render()
     {}
+
+    bool engine::on_window_close(window_close& wc)
+    {
+        MINT_TRACE(wc.to_string());
+    }
 }

@@ -40,4 +40,9 @@ void logger::log_message(log_level level, const char* msg, ...)
     // std::cout << msg_out2;
     console_write(level, msg_out2);
 }
+
+void logger::log_message(log_level level, const std::string& message)
+{
+    log_message(level, message.c_str());
+}
 }  // namespace mnt
