@@ -6,11 +6,9 @@ namespace mnt
 {
     engine* engine::s_instance = nullptr;
 
-    engine::engine()
-    {}
+    engine::engine() {}
 
-    engine::~engine()
-    {}
+    engine::~engine() {}
 
     engine& engine::get()
     {
@@ -41,24 +39,14 @@ namespace mnt
     void engine::on_event(event& e)
     {
         event_dispatcher dispatcher(e);
-        dispatcher.dispatch<window_close>(
-            [this](window_close& e) {
-                return this->on_window_close(e);
-            }
-        );
+        dispatcher.dispatch<window_close>([this](window_close& e) { return this->on_window_close(e); });
     }
 
-    void engine::run()
-    {}
+    void engine::run() {}
 
-    void engine::update(f32 dt)
-    {}
+    void engine::update(f32 dt) {}
 
-    void engine::render()
-    {}
+    void engine::render() {}
 
-    bool engine::on_window_close(window_close& wc)
-    {
-        MINT_TRACE(wc.to_string());
-    }
-}
+    bool engine::on_window_close(window_close& wc) { MINT_TRACE(wc.to_string()); }
+} // namespace mnt

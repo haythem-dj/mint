@@ -1,9 +1,7 @@
 #pragma once
 
 #include "mint/common/defines.hpp"
-
 #include "mint/core/logger.hpp"
-
 #include "mint/event/event.hpp"
 #include "mint/event/window_events.hpp"
 
@@ -30,7 +28,7 @@ namespace mnt
 
         inline application& get_app() { return *m_app; }
         inline logger& get_logger() { return m_logger; }
-    
+
     private:
         engine();
 
@@ -38,14 +36,14 @@ namespace mnt
         void render();
 
         bool on_window_close(window_close& wc);
-    
+
     private:
         b8 m_is_initialized = false;
-        
+
         application* m_app = nullptr;
         logger m_logger;
 
     private:
         static engine* s_instance;
     };
-}
+} // namespace mnt
