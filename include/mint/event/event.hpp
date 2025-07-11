@@ -40,7 +40,7 @@ namespace mnt
 
     class event_dispatcher
     {
-        template <typename T> using event_fn = std::function<bool(T&)>;
+        template <typename T> using event_fn = std::function<b8(T&)>;
 
     public:
         event_dispatcher(event& event) : m_event(event) {}

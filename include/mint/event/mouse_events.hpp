@@ -18,6 +18,8 @@ namespace mnt
             return ss.str();
         }
 
+        inline u32 get_button() const { return m_button; }
+
     private:
         u32 m_button;
     };
@@ -34,6 +36,8 @@ namespace mnt
             ss << "mouse release: " << m_button;
             return ss.str();
         }
+
+        inline u32 get_button() const { return m_button; }
 
     private:
         u32 m_button;
@@ -52,6 +56,9 @@ namespace mnt
             return ss.str();
         }
 
+        inline i32 get_x() const { return m_x; }
+        inline i32 get_y() const { return m_y; }
+
     private:
         i32 m_x = 0;
         i32 m_y = 0;
@@ -69,6 +76,8 @@ namespace mnt
             ss << "mouse scroll: " << m_delta;
             return ss.str();
         }
+
+        inline i32 get_delta() const { return m_delta; }
 
     private:
         i32 m_delta = 0;

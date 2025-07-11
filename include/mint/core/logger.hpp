@@ -41,9 +41,16 @@ namespace mnt
 #define MINT_ERROR(...) ::mnt::engine::get().get_logger().log_message(::mnt::LOG_LEVEL_ERROR, __VA_ARGS__)
 #define MINT_WARN(...) ::mnt::engine::get().get_logger().log_message(::mnt::LOG_LEVEL_WARN, __VA_ARGS__)
 #define MINT_INFO(...) ::mnt::engine::get().get_logger().log_message(::mnt::LOG_LEVEL_INFO, __VA_ARGS__)
+
+#ifdef MINT_CONFIG_DEBUG
 #define MINT_DEBUG(...) ::mnt::engine::get().get_logger().log_message(::mnt::LOG_LEVEL_DEBUG, __VA_ARGS__)
 #define MINT_TRACE(...) ::mnt::engine::get().get_logger().log_message(::mnt::LOG_LEVEL_TRACE, __VA_ARGS__)
+#else
+#define MINT_DEBUG(...)
+#define MINT_TRACE(...)
+#endif
 
+#ifdef MINT_CONFIG_DEBUG
 #define MINT_ASSERT(x, ...)                                                                                            \
     do                                                                                                                 \
     {                                                                                                                  \
@@ -54,3 +61,6 @@ namespace mnt
             MINT_DEBUGBREAK();                                                                                         \
         }                                                                                                              \
     } while (false)
+#else
+#define MINT_ASSERT(x, ...)
+#endif

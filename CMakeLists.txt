@@ -4,7 +4,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(mint VERSION 1.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(configurations
@@ -38,8 +38,8 @@ target_compile_options(mint PRIVATE
 )
 
 target_compile_definitions(mint PRIVATE
-    $<$<CONFIG:Debug>:MINT_BUILD_DEBUG>
-    $<$<CONFIG:Release>:MINT_BUILD_RELEASE>
+    $<$<CONFIG:debug>:MINT_CONFIG_DEBUG>
+    $<$<CONFIG:release>:MINT_CONFIG_RELEASE>
     MINT_EXPORT
 )
 

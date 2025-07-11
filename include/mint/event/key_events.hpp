@@ -15,7 +15,10 @@ namespace mnt
         {
             std::stringstream ss;
             ss << "key press: " << m_key_code;
+            return ss.str();
         }
+
+        inline u32 get_key_code() const { return m_key_code; }
 
     private:
         u32 m_key_code = 0;
@@ -33,6 +36,8 @@ namespace mnt
             ss << "key release: " << m_key_code;
             return ss.str();
         }
+
+        inline u32 get_key_code() const { return m_key_code; }
 
     private:
         u32 m_key_code = 0;

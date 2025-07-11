@@ -20,6 +20,8 @@ namespace mnt
             return ss.str();
         }
 
+        inline i32 get_code() const { return m_code; }
+
     private:
         i32 m_code = 0;
     };
@@ -36,6 +38,9 @@ namespace mnt
             ss << "window resize: " << m_width << ", " << m_height;
             return ss.str();
         }
+
+        inline u32 get_width() const { return m_width; }
+        inline u32 get_height() const { return m_height; }
 
     private:
         u32 m_width = 0;

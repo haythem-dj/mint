@@ -1,6 +1,7 @@
 #include "mint/core/engine.hpp"
 
 #include "mint/core/application.hpp"
+#include "mint/core/window.hpp"
 
 namespace mnt
 {
@@ -21,32 +22,61 @@ namespace mnt
         if (m_is_initialized) return false;
 
         if (!m_logger.initialize("MINT")) return false;
-        m_logger.log_message(LOG_LEVEL_TRACE, "initializing the engine.");
+
+        window_props props;
+        if (!m_window.initialize(props)) return false;
 
         m_app = app;
         if (!m_app->initialize()) return false;
 
         m_is_initialized = true;
+        MINT_INFO("Engine initialized.");
+        m_is_running = true;
         return true;
     }
 
     void engine::shutdown()
     {
         m_app->shutdown();
+        m_window.shutdown();
         m_logger.shutdown();
+        MINT_INFO("Engine shuted down");
+        m_is_initialized = false;
     }
 
     void engine::on_event(event& e)
     {
         event_dispatcher dispatcher(e);
         dispatcher.dispatch<window_close>([this](window_close& e) { return this->on_window_close(e); });
+        dispatcher.dispatch<window_resize>([this](window_resize& e) { return this->on_window_resize(e); });
     }
 
-    void engine::run() {}
+    void engine::run()
+    {
+        while (m_is_running)
+        {
+            update(1);
+            render();
+        }
+    }
 
-    void engine::update(f32 dt) {}
+    void engine::update(f32 dt)
+    {
+        m_window.update();
+        m_app->update(dt);
+    }
 
-    void engine::render() {}
+    void engine::render() { m_app->render(); }
 
-    bool engine::on_window_close(window_close& wc) { MINT_TRACE(wc.to_string()); }
+    b8 engine::on_window_close(window_close& wc)
+    {
+        m_is_running = false;
+        MINT_TRACE("Exiting with code: %d", wc.get_code());
+        return true;
+    }
+
+    b8 engine::on_window_resize(window_resize& wr)
+    {
+        return false;
+    }
 } // namespace mnt
