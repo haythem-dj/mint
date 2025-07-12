@@ -20,17 +20,22 @@ endif()
 
 file(GLOB LIB_FILES "src/**/*.cpp")
 
+add_subdirectory(external/glad)
+
 add_library(mint SHARED ${LIB_FILES})
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     target_compile_definitions(mint PUBLIC MINT_PLATFORM_LINUX)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     target_compile_definitions(mint PUBLIC MINT_PLATFORM_WINDOWS)
+    target_link_libraries(mint PUBLIC opengl32)
 endif()
 
 target_include_directories(mint PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 )
+
+target_link_libraries(mint PRIVATE glad)
 
 target_compile_options(mint PRIVATE
     $<$<CXX_COMPILER_ID:GNU,Clang>:-Wall;-Wextra;-Wpedantic>

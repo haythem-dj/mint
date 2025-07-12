@@ -1,6 +1,7 @@
 #ifdef MINT_PLATFORM_WINDOWS
 
 #include <windows.h>
+#include <glad/glad.h>
 
 #include "mint/core/engine.hpp"
 #include "mint/core/logger.hpp"
@@ -12,29 +13,13 @@
 
 namespace mnt
 {
-    void logger::console_write(log_level level, const char* msg)
-    {
-        HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
-
-        static u8 levels[6] = {64, 4, 6, 2, 1, 15};
-
-        SetConsoleTextAttribute(console_handle, levels[level]);
-
-        OutputDebugStringA(msg);
-
-        u64 length = strlen(msg);
-
-        LPDWORD number_written = 0;
-
-        WriteConsoleA(GetStdHandle(STD_OUTPUT_HANDLE), msg, (DWORD)length, number_written, 0);
-    }
-
     struct window_state
     {
         HWND hwnd;
         HINSTANCE hinstance;
+        HDC device_context;
     };
-    static window_state state{.hwnd = NULL, .hinstance = NULL};
+    static window_state state{.hwnd = NULL, .hinstance = NULL, .device_context = NULL};
 
     static const char* CLASS_NAME = "window class name";
 
@@ -78,6 +63,23 @@ namespace mnt
 
         ShowWindow(state.hwnd, SW_SHOW);
 
+        state.device_context = GetDC(state.hwnd);
+        PIXELFORMATDESCRIPTOR pfd = {};
+        pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+        pfd.nVersion = 1;
+        pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+        pfd.iPixelType = PFD_TYPE_RGBA;
+        pfd.cColorBits = 32;
+        pfd.cDepthBits = 24;
+        pfd.cStencilBits = 8;
+        pfd.iLayerType = PFD_MAIN_PLANE;
+
+        int pixel_format = ChoosePixelFormat(state.device_context, &pfd);
+        SetPixelFormat(state.device_context, pixel_format, &pfd);
+
+        HGLRC context = wglCreateContext(state.device_context);
+        wglMakeCurrent(state.device_context, context);
+
         MINT_INFO("Window initialized.");
         m_is_initialized = true;
         return true;
@@ -104,6 +106,8 @@ namespace mnt
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+
+        SwapBuffers(state.device_context);
     }
 
     LRESULT CALLBACK window_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)

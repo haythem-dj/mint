@@ -1,7 +1,5 @@
 project(mint_test VERSION 1.0 LANGUAGES CXX)
 
-file(GLOB FILES "./*.cpp")
-
 add_executable(mint_test main.cpp)
 target_link_libraries(mint_test PRIVATE mint)
 
