@@ -8,6 +8,9 @@
 #include "mint/event/event.hpp"
 #include "mint/event/window_events.hpp"
 
+#include "mint/input/key_input.hpp"
+#include "mint/input/mouse_input.hpp"
+
 namespace mnt
 {
     class application;
@@ -29,9 +32,13 @@ namespace mnt
 
         void run();
 
+        void stop() { m_is_running = false; }
+
         inline application& get_app() { return *m_app; }
         inline logger& get_logger() { return m_logger; }
         inline window& get_window() { return m_window; }
+        inline input::keyboard& get_keyboard() { return m_keyboard; }
+        inline input::mouse& get_mouse() { return m_mouse; }
 
     private:
         engine();
@@ -49,6 +56,8 @@ namespace mnt
         application* m_app = nullptr;
         logger m_logger;
         window m_window;
+        input::keyboard m_keyboard;
+        input::mouse m_mouse;
 
     private:
         static engine* s_instance;

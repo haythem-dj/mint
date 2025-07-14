@@ -9,3 +9,8 @@
 #include "mint/event/key_events.hpp"
 #include "mint/event/mouse_events.hpp"
 #include "mint/event/window_events.hpp"
+
+#include "mint/input/key_codes.hpp"
+#include "mint/input/mouse_buttons.hpp"
+#include "mint/input/key_input.hpp"
+#include "mint/input/mouse_input.hpp"

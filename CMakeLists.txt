@@ -18,11 +18,20 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE debug)
 endif()
 
-file(GLOB LIB_FILES "src/**/*.cpp")
+set(LIB_SRCS
+    src/core/engine.cpp
+    src/core/logger.cpp
+    src/graphics/shader.cpp
+    src/input/key_input.cpp
+    src/input/mouse_input.cpp
+    src/platform/windows/windows_logger.cpp
+    src/platform/windows/windows_window.cpp
+    src/render_backend/opengl/gl_shader.cpp
+)
 
 add_subdirectory(external/glad)
 
-add_library(mint SHARED ${LIB_FILES})
+add_library(mint SHARED ${LIB_SRCS})
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     target_compile_definitions(mint PUBLIC MINT_PLATFORM_LINUX)

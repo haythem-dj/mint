@@ -1,46 +1,49 @@
 #pragma once
 
 #include "mint/common/defines.hpp"
+
 #include "mint/event/event.hpp"
+
+#include "mint/input/mouse_buttons.hpp"
 
 namespace mnt
 {
     class mouse_press : public event
     {
     public:
-        mouse_press(u32 button) : m_button(button) {}
+        mouse_press(input::mouse_button button) : m_button(button) {}
 
         EVENT_CLASS_TYPE(mouse_press);
         virtual std::string to_string() const override
         {
             std::stringstream ss;
-            ss << "mouse press: " << m_button;
+            ss << "mouse press: " << (u32)m_button;
             return ss.str();
         }
 
-        inline u32 get_button() const { return m_button; }
+        inline input::mouse_button get_button() const { return m_button; }
 
     private:
-        u32 m_button;
+        input::mouse_button m_button = input::mouse_button::none;
     };
 
     class mouse_release : public event
     {
     public:
-        mouse_release(u32 button) : m_button(button) {}
+        mouse_release(input::mouse_button button) : m_button(button) {}
 
         EVENT_CLASS_TYPE(mouse_release);
         virtual std::string to_string() const override
         {
             std::stringstream ss;
-            ss << "mouse release: " << m_button;
+            ss << "mouse release: " << (u32)m_button;
             return ss.str();
         }
 
-        inline u32 get_button() const { return m_button; }
+        inline input::mouse_button get_button() const { return m_button; }
 
     private:
-        u32 m_button;
+        input::mouse_button m_button = input::mouse_button::none;
     };
 
     class mouse_move : public event

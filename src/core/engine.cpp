@@ -26,6 +26,9 @@ namespace mnt
         window_props props;
         if (!m_window.initialize(props)) return false;
 
+        if (!m_keyboard.initialize()) return false;
+        if (!m_mouse.initialize()) return false;
+
         m_app = app;
         if (!m_app->initialize()) return false;
 
@@ -38,6 +41,8 @@ namespace mnt
     void engine::shutdown()
     {
         m_app->shutdown();
+        m_keyboard.shutdown();
+        m_mouse.shutdown();
         m_window.shutdown();
         m_logger.shutdown();
         MINT_INFO("Engine shuted down");
@@ -46,9 +51,12 @@ namespace mnt
 
     void engine::on_event(event& e)
     {
+        if (!m_is_initialized) return;
         event_dispatcher dispatcher(e);
         dispatcher.dispatch<window_close>([this](window_close& e) { return this->on_window_close(e); });
         dispatcher.dispatch<window_resize>([this](window_resize& e) { return this->on_window_resize(e); });
+
+        m_app->on_event(e);
     }
 
     void engine::run()
@@ -63,6 +71,7 @@ namespace mnt
     void engine::update(f32 dt)
     {
         m_window.update();
+        m_keyboard.update();
         m_app->update(dt);
     }
 
@@ -75,8 +84,5 @@ namespace mnt
         return true;
     }
 
-    b8 engine::on_window_resize(window_resize& wr)
-    {
-        return false;
-    }
+    b8 engine::on_window_resize(window_resize& wr) { return false; }
 } // namespace mnt
