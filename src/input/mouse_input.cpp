@@ -47,9 +47,19 @@ namespace mnt::input
 		return (m_mouse_present[(u32)button] && !m_mouse_previous[(u32)button]);
 	}
 
+	math::vector2 mouse::get_position() const
+	{
+		return m_position;
+	}
+
 	void process_button(mouse_button button, b8 pressed)
 	{
 		if (engine::get().get_mouse().m_mouse_present[(u32)button] != pressed)
 			engine::get().get_mouse().m_mouse_present[(u32)button] = pressed;
+	}
+
+    void process_position(i32 x, i32 y)
+	{
+		engine::get().get_mouse().m_position = { static_cast<f32>(x), static_cast<f32>(y) };
 	}
 }

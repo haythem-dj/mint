@@ -24,6 +24,8 @@ set(LIB_SRCS
     src/graphics/shader.cpp
     src/input/key_input.cpp
     src/input/mouse_input.cpp
+    src/math/math.cpp
+    src/math/vector.cpp
     src/platform/windows/windows_logger.cpp
     src/platform/windows/windows_window.cpp
     src/render_backend/opengl/gl_shader.cpp

@@ -163,6 +163,9 @@ namespace mnt
             i32 y = HIWORD(lparam);
             mouse_move mv(x, y);
             engine::get().on_event(mv);
+
+
+            input::process_position(x, y);
         }
         break;
 

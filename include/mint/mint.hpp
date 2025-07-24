@@ -14,3 +14,6 @@
 #include "mint/input/mouse_buttons.hpp"
 #include "mint/input/key_input.hpp"
 #include "mint/input/mouse_input.hpp"
+
+#include "mint/math/math.hpp"
+#include "mint/math/vector.hpp"

@@ -1,18 +1,24 @@
 #include <mint/mint.hpp>
 
+#include <mint/math/math.hpp>
+#include <mint/math/vector.hpp>
+
 #include <iostream>
 
 class test_app : public mnt::application
 {
 public:
-    b8 initialize() override { return true; }
+    b8 initialize() override
+    {
+        return true;
+    }
 
     void shutdown() override {}
 
     void update(f32 dt) override
     {
-        if (MINT_IS_KEY_DOWN(mnt::input::key_code::a)) MINT_DEBUG("a is down");
-        if (MINT_IS_BUTTON_DOWN(mnt::input::mouse_button::left)) MINT_DEBUG("mouse left is down");
+        mnt::math::vector2 pos = MINT_GET_MOUSE_POS();
+        MINT_TRACE("%f, %f", pos.x, pos.y);
     }
 
     void render() override {}
