@@ -15,13 +15,13 @@ public:
 
     void shutdown() override {}
 
-    void update(f32 dt) override
-    {
-        mnt::math::vector2 pos = MINT_GET_MOUSE_POS();
-        MINT_TRACE("%f, %f", pos.x, pos.y);
-    }
+    void update(f32 dt) override {}
 
-    void render() override {}
+    void render() override
+    {
+        mnt::engine::get().get_renderer().set_clear_color({1.0f, 0.0f, 0.0f, 1.0f});
+        mnt::engine::get().get_renderer().clear();
+    }
 
     void on_event(mnt::event& e) override
     {

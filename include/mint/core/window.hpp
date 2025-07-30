@@ -22,7 +22,11 @@ namespace mnt
         b8 initialize(const window_props& props);
         void shutdown();
 
-        void update();
+        void process_messages();
+        b8 make_current_context();
+        void swap_buffers();
+
+        void* get_window_handle() const;
 
     private:
         b8 m_is_initialized = false;

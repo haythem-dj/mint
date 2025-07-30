@@ -11,6 +11,10 @@
 #include "mint/input/key_input.hpp"
 #include "mint/input/mouse_input.hpp"
 
+#include "mint/graphics/renderer.hpp"
+#include "mint/graphics/shader.hpp"
+
+
 namespace mnt
 {
     class application;
@@ -39,6 +43,7 @@ namespace mnt
         inline window& get_window() { return m_window; }
         inline input::keyboard& get_keyboard() { return m_keyboard; }
         inline input::mouse& get_mouse() { return m_mouse; }
+        inline graphics::renderer& get_renderer() { return *m_renderer; }
 
     private:
         engine();
@@ -58,6 +63,13 @@ namespace mnt
         window m_window;
         input::keyboard m_keyboard;
         input::mouse m_mouse;
+
+        graphics::renderer* m_renderer;
+
+        graphics::shader* m_test;
+        u32 m_vao;
+        u32 m_vbo;
+        u32 m_ebo;
 
     private:
         static engine* s_instance;

@@ -29,6 +29,9 @@ namespace mnt
         if (!m_keyboard.initialize()) return false;
         if (!m_mouse.initialize()) return false;
 
+        m_renderer = graphics::renderer::create();
+        if (!m_renderer->initialize(&m_window)) return false;
+
         m_app = app;
         if (!m_app->initialize()) return false;
 
@@ -41,6 +44,7 @@ namespace mnt
     void engine::shutdown()
     {
         m_app->shutdown();
+        m_renderer->shutdown();
         m_keyboard.shutdown();
         m_mouse.shutdown();
         m_window.shutdown();
@@ -70,12 +74,17 @@ namespace mnt
 
     void engine::update(f32 dt)
     {
-        m_window.update();
+        m_window.process_messages();
         m_keyboard.update();
         m_app->update(dt);
     }
 
-    void engine::render() { m_app->render(); }
+    void engine::render()
+    {
+        m_renderer->begin_render();
+        m_app->render();
+        m_renderer->end_render();
+    }
 
     b8 engine::on_window_close(window_close& wc)
     {
