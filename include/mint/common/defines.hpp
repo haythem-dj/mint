@@ -39,5 +39,5 @@ typedef double f64;
 #define MINT_DEBUGBREAK() __builtin_trap()
 #else
 #warning "MINT_DEBUGBREAK is not defined for this compiler/platform."
-#define MINT_DEBUGBREAK() ((void)0)  // Placeholder for unsupported platforms
+#define MINT_DEBUGBREAK() ((void)0) // Placeholder for unsupported platforms
 #endif

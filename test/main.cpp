@@ -1,17 +1,46 @@
 #include <mint/mint.hpp>
 
-#include "mint/core/logger.hpp"
+#include <mint/math/math.hpp>
+#include <mint/math/vector.hpp>
+
+#include <iostream>
 
 class test_app : public mnt::application
 {
-   public:
-    b8 initialize() override { return true; }
+public:
+    b8 initialize() override
+    {
+        return true;
+    }
 
     void shutdown() override {}
 
-    void update(f32 dt) override {}
+    void update(f32 dt) override
+    {
+        mnt::math::vector2 pos = MINT_GET_MOUSE_POS();
+        MINT_TRACE("%f, %f", pos.x, pos.y);
+    }
 
     void render() override {}
+
+    void on_event(mnt::event& e) override
+    {
+        if (e.get_event_type() == mnt::event_type::key_press)
+        {
+            mnt::key_press kp = (mnt::key_press&)e;
+            if (kp.get_key_code() == mnt::input::key_code::escape)
+                mnt::engine::get().stop();
+        }
+    }
+
+private:
+    b8 on_key_press(mnt::key_press& kp)
+    {
+        MINT_TRACE("%s", kp.to_string());
+        return false;
+    }
+
+private:
 };
 
 int main(void)
@@ -20,14 +49,6 @@ int main(void)
     test_app* app = new test_app();
 
     e.initialize(app);
-
-    MINT_FATAL("FATAL");
-    MINT_ERROR("ERROR");
-    MINT_WARN("WARN");
-    MINT_INFO("INFO");
-    MINT_DEBUG("DEBUG");
-    MINT_TRACE("TRACE");
-
     e.run();
     e.shutdown();
 
