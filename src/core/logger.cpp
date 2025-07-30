@@ -26,8 +26,8 @@ namespace mnt
 
     void logger::shutdown()
     {
-        m_is_initialized = false;
         MINT_INFO("Logger shuted down.");
+        m_is_initialized = false;
     }
 
     void logger::log_message(log_level level, const char* msg, ...)

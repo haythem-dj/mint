@@ -3,7 +3,7 @@
 #include "mint/core/engine.hpp"
 #include "mint/core/logger.hpp"
 
-#include <glad/glad.h>
+#include <glad/gl.h>
 
 #include <fstream>
 #include <sstream>

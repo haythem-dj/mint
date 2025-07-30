@@ -21,6 +21,7 @@ endif()
 set(LIB_SRCS
     src/core/engine.cpp
     src/core/logger.cpp
+    src/graphics/renderer.cpp
     src/graphics/shader.cpp
     src/input/key_input.cpp
     src/input/mouse_input.cpp
@@ -28,6 +29,7 @@ set(LIB_SRCS
     src/math/vector.cpp
     src/platform/windows/windows_logger.cpp
     src/platform/windows/windows_window.cpp
+    src/render_backend/opengl/gl_renderer.cpp
     src/render_backend/opengl/gl_shader.cpp
 )
 
@@ -49,7 +51,7 @@ target_include_directories(mint PUBLIC
 target_link_libraries(mint PRIVATE glad)
 
 target_compile_options(mint PRIVATE
-    $<$<CXX_COMPILER_ID:GNU,Clang>:-Wall;-Wextra;-Wpedantic>
+    $<$<CXX_COMPILER_ID:GNU,Clang>:-Wall;-Wextra>
     $<$<CXX_COMPILER_ID:MSVC>:/W4>
 )
 
