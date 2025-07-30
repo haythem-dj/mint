@@ -19,8 +19,8 @@ public:
 
     void render() override
     {
-        // mnt::engine::get().get_renderer().set_clear_color({1.0f, 0.0f, 0.0f, 1.0f});
-        // mnt::engine::get().get_renderer().clear();
+        mnt::engine::get().get_renderer().set_clear_color({1.0f, 0.0f, 0.0f, 1.0f});
+        mnt::engine::get().get_renderer().clear();
     }
 
     void on_event(mnt::event& e) override
