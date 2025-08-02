@@ -10,6 +10,8 @@ class test_app : public mnt::application
 public:
     b8 initialize() override
     {
+        m_engine = &mnt::engine::get();
+        m_renderer = &m_engine->get_renderer();
         return true;
     }
 
@@ -19,8 +21,8 @@ public:
 
     void render() override
     {
-        mnt::engine::get().get_renderer().set_clear_color({1.0f, 0.0f, 0.0f, 1.0f});
-        mnt::engine::get().get_renderer().clear();
+        // m_renderer->set_clear_color({0.5f, 0.65f, 0.14f, 1.0f});
+        // m_renderer->clear();
     }
 
     void on_event(mnt::event& e) override
@@ -41,6 +43,8 @@ private:
     }
 
 private:
+    mnt::engine* m_engine = nullptr;
+    mnt::graphics::renderer* m_renderer = nullptr;
 };
 
 int main(void)

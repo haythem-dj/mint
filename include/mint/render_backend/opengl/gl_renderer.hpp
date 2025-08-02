@@ -6,7 +6,7 @@
 
 namespace mnt::graphics
 {
-    class MINT_API gl_renderer : public renderer
+    class gl_renderer : public renderer
     {
     public:
         gl_renderer();

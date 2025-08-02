@@ -13,7 +13,8 @@
 
 #include "mint/graphics/renderer.hpp"
 #include "mint/graphics/shader.hpp"
-
+#include "mint/graphics/vbo.hpp"
+#include "mint/graphics/ebo.hpp"
 
 namespace mnt
 {
@@ -68,8 +69,8 @@ namespace mnt
 
         graphics::shader* m_test;
         u32 m_vao;
-        u32 m_vbo;
-        u32 m_ebo;
+        graphics::vbo* m_vbo;
+        graphics::ebo* m_ebo;
 
     private:
         static engine* s_instance;

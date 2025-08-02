@@ -23,6 +23,9 @@ set(LIB_SRCS
     src/core/logger.cpp
     src/graphics/renderer.cpp
     src/graphics/shader.cpp
+    src/graphics/vbo.cpp
+    src/graphics/ebo.cpp
+    # src/graphics/shader.cpp
     src/input/key_input.cpp
     src/input/mouse_input.cpp
     src/math/math.cpp
@@ -31,6 +34,8 @@ set(LIB_SRCS
     src/platform/windows/windows_window.cpp
     src/render_backend/opengl/gl_renderer.cpp
     src/render_backend/opengl/gl_shader.cpp
+    src/render_backend/opengl/gl_vbo.cpp
+    src/render_backend/opengl/gl_ebo.cpp
 )
 
 add_subdirectory(external/glad)

@@ -10,6 +10,11 @@
 #include "mint/event/mouse_events.hpp"
 #include "mint/event/window_events.hpp"
 
+#include "mint/graphics/renderer.hpp"
+#include "mint/graphics/shader.hpp"
+#include "mint/graphics/vbo.hpp"
+#include "mint/graphics/ebo.hpp"
+
 #include "mint/input/key_codes.hpp"
 #include "mint/input/mouse_buttons.hpp"
 #include "mint/input/key_input.hpp"

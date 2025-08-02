@@ -30,6 +30,6 @@ namespace mnt::graphics
 		static shader* create();
 
 	protected:
-		u32 m_id;
+		u32 m_id = 0;
 	};
 }
