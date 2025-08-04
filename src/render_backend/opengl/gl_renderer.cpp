@@ -1,7 +1,9 @@
 #include "mint/render_backend/opengl/gl_renderer.hpp"
 
-#include "mint/core/logger.hpp"
 #include "mint/core/engine.hpp"
+
+#include "mint/graphics/vao.hpp"
+#include "mint/graphics/shader.hpp"
 
 #include <glad/gl.h>
 
@@ -59,5 +61,18 @@ namespace mnt::graphics
         if (!m_is_initialized) return;
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+    void gl_renderer::draw_indexed(vao* vao, shader* shader)
+    {
+        if (!vao)
+        {
+            MINT_ERROR("renderer::draw_indexed - vao is null");
+            return;
+        }
+
+        shader->bind();
+        vao->bind();
+        glDrawElements(GL_TRIANGLES, vao->get_element_count(), GL_UNSIGNED_INT, 0);
     }
 }

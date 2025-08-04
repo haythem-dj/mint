@@ -1,5 +1,19 @@
 #include <mint/mint.hpp>
 
+struct mesh
+{
+    mnt::graphics::vao* vao;
+    mnt::graphics::vbo* vbo;
+    mnt::graphics::ebo* ebo;
+
+    void initialize()
+    {
+        vao = mnt::graphics::vao::create();
+        vbo = mnt::graphics::vbo::create();
+        ebo = mnt::graphics::ebo::create();
+    }
+};
+
 class test_app : public mnt::application
 {
 public:
@@ -8,19 +22,42 @@ public:
         m_engine = &mnt::engine::get();
         m_renderer = &m_engine->get_renderer();
 
-        mnt::math::vector3 v(10.f, 0.5f, 5.1f);
-        v.x = 10;
+        m_shader = mnt::graphics::shader::create();
+        m_shader->initialize(mnt::graphics::shader_init_type::file, "res/shaders/default.vert.glsl", "res/shaders/default.frag.glsl");
 
-        MINT_TRACE("x: %f, y: %f, z: %f", v.x, v.y, v.z);
-        MINT_TRACE("r: %f, g: %f, b: %f", v.r, v.g, v.b);
+        test_mesh.initialize();
+        test_mesh.vao->initialize();
+        {
+            f32 buffer[] = {
+                -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+                0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+                0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
+            };
+            // f32 buffer[] = {
+            //     -0.5f, -0.5f, 0.0f,
+            //     0.0f, 0.5f, 0.0f,
+            //     0.5f, -0.5f, 0.0f
+            // };
+            test_mesh.vbo->initialize(sizeof(buffer), buffer);
+        }
+
+        {
+            u32 buffer[] = { 0, 1, 2 };
+            test_mesh.ebo->initialize(sizeof(buffer)/sizeof(u32), buffer);
+        }
+
+        test_mesh.vao->add_vertex_buffer(test_mesh.vbo, {3, 4});
+        test_mesh.vao->set_index_buffer(test_mesh.ebo);
         
+        m_renderer->set_clear_color({0.9f, 0.15f, 0.74f, 1.0f});
+
         return true;
     }
 
     void render() override
     {
-        m_renderer->set_clear_color({0.9f, 0.15f, 0.74f, 1.0f});
         m_renderer->clear();
+        m_renderer->draw_indexed(test_mesh.vao, m_shader);
     }
 
     void on_event(mnt::event& e) override
@@ -34,15 +71,12 @@ public:
     }
 
 private:
-    b8 on_key_press(mnt::key_press& kp)
-    {
-        MINT_TRACE("%s", kp.to_string());
-        return false;
-    }
-
-private:
     mnt::engine* m_engine = nullptr;
     mnt::graphics::renderer* m_renderer = nullptr;
+
+    mnt::graphics::shader* m_shader;
+    mesh test_mesh;
+
 };
 
 int main(void)

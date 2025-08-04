@@ -16,6 +16,8 @@ namespace mnt::graphics
         virtual void bind() const = 0;
         virtual void unbind() const = 0;
 
+        virtual u32 get_count() const = 0;
+
         u32 get_id() const { return m_id; }
 
         static ebo* create();
