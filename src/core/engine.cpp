@@ -134,9 +134,13 @@ namespace mnt
     b8 engine::on_window_close(window_close& wc)
     {
         m_is_running = false;
-        MINT_TRACE("Exiting with code: %d", wc.get_code());
+        MINT_INFO("Exiting with code: %d", wc.get_code());
         return true;
     }
 
-    b8 engine::on_window_resize(window_resize& wr) { return false; }
+    b8 engine::on_window_resize(window_resize& wr)
+    {
+        m_app->on_resize(wr.get_width(), wr.get_height());
+        return false;
+    }
 } // namespace mnt

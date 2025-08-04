@@ -9,16 +9,11 @@ namespace mnt::math
 	public:
 		union
 		{
-			struct
-			{
-				f32 x;
-				f32 y;
-			};
-			struct
-			{
-				f32 u;
-				f32 v;
-			};
+			f32 x, u;
+		};
+		union
+		{
+			f32 y, v;
 		};
 
 		vector2();
@@ -40,18 +35,15 @@ namespace mnt::math
 	public:
 		union
 		{
-			struct
-			{
-				f32 x;
-				f32 y;
-				f32 z;
-			};
-			struct
-			{
-				f32 r;
-				f32 g;
-				f32 b;
-			};
+			f32 x, r;
+		};
+		union
+		{
+			f32 y, g;
+		};
+		union
+		{
+			f32 z, b;
 		};
 
 		vector3();
@@ -73,21 +65,21 @@ namespace mnt::math
 	public:
 		union
 		{
-			struct
-			{
-				f32 x;
-				f32 y;
-				f32 z;
-				f32 w;
-			};
-			struct
-			{
-				f32 r;
-				f32 g;
-				f32 b;
-				f32 a;
-			};
+			f32 x, r;
 		};
+		union
+		{
+			f32 y, g;
+		};
+		union
+		{
+			f32 z, b;
+		};
+		union
+		{
+			f32 w, a;
+		};
+		
 
 		vector4();
 		vector4(f32 p_x, f32 p_y, f32 p_z, f32 p_a);

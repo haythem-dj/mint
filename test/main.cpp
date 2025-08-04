@@ -1,10 +1,5 @@
 #include <mint/mint.hpp>
 
-#include <mint/math/math.hpp>
-#include <mint/math/vector.hpp>
-
-#include <iostream>
-
 class test_app : public mnt::application
 {
 public:
@@ -12,17 +7,20 @@ public:
     {
         m_engine = &mnt::engine::get();
         m_renderer = &m_engine->get_renderer();
+
+        mnt::math::vector3 v(10.f, 0.5f, 5.1f);
+        v.x = 10;
+
+        MINT_TRACE("x: %f, y: %f, z: %f", v.x, v.y, v.z);
+        MINT_TRACE("r: %f, g: %f, b: %f", v.r, v.g, v.b);
+        
         return true;
     }
 
-    void shutdown() override {}
-
-    void update(f32 dt) override {}
-
     void render() override
     {
-        // m_renderer->set_clear_color({0.5f, 0.65f, 0.14f, 1.0f});
-        // m_renderer->clear();
+        m_renderer->set_clear_color({0.9f, 0.15f, 0.74f, 1.0f});
+        m_renderer->clear();
     }
 
     void on_event(mnt::event& e) override
