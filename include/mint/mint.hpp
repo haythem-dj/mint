@@ -15,6 +15,7 @@
 #include "mint/graphics/vbo.hpp"
 #include "mint/graphics/ebo.hpp"
 #include "mint/graphics/vao.hpp"
+#include "mint/graphics/texture.hpp"
 
 #include "mint/input/key_codes.hpp"
 #include "mint/input/mouse_buttons.hpp"

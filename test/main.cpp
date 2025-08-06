@@ -29,9 +29,9 @@ public:
         test_mesh.vao->initialize();
         {
             f32 buffer[] = {
-                -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-                0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-                0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
+                -0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   0.0f, 0.0f,
+                 0.0f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   0.5f, 1.0f,
+                 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   1.0f, 0.0f
             };
             test_mesh.vbo->initialize(sizeof(buffer), buffer);
         }
@@ -41,12 +41,16 @@ public:
             test_mesh.ebo->initialize(sizeof(buffer)/sizeof(u32), buffer);
         }
 
-        test_mesh.vao->add_vertex_buffer(test_mesh.vbo, {3, 4});
+        m_tex = mnt::graphics::texture::create();
+        m_tex->initialize("res/textures/brick/brick_diffuse.png");
+
+        test_mesh.vao->add_vertex_buffer(test_mesh.vbo, {3, 4, 2});
         test_mesh.vao->set_index_buffer(test_mesh.ebo);
         
         m_renderer->set_clear_color({0.9f, 0.15f, 0.74f, 1.0f});
 
         m_shader->set_float4("u_color", { 1.0f, 0.0f, 0.0f, 1.0f });
+        m_shader->set_int1("u_diffuse", 0);
 
         return true;
     }
@@ -54,6 +58,7 @@ public:
     void render() override
     {
         m_renderer->clear();
+        m_tex->bind(0);
         m_renderer->draw_indexed(test_mesh.vao, m_shader);
     }
 
@@ -73,6 +78,7 @@ private:
 
     mnt::graphics::shader* m_shader;
     mesh test_mesh;
+    mnt::graphics::texture* m_tex;
 
 };
 
