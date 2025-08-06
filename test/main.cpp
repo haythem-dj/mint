@@ -33,11 +33,6 @@ public:
                 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
                 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
             };
-            // f32 buffer[] = {
-            //     -0.5f, -0.5f, 0.0f,
-            //     0.0f, 0.5f, 0.0f,
-            //     0.5f, -0.5f, 0.0f
-            // };
             test_mesh.vbo->initialize(sizeof(buffer), buffer);
         }
 
@@ -50,6 +45,8 @@ public:
         test_mesh.vao->set_index_buffer(test_mesh.ebo);
         
         m_renderer->set_clear_color({0.9f, 0.15f, 0.74f, 1.0f});
+
+        m_shader->set_float4("u_color", { 1.0f, 0.0f, 0.0f, 1.0f });
 
         return true;
     }

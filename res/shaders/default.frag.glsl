@@ -9,5 +9,6 @@ uniform vec4 u_color;
 void main()
 {
     o_color = v_color;
+    o_color = u_color;
     // o_color = vec4(1.0, 0.0, 0.0, 1.0);
 }
