@@ -10,14 +10,15 @@ namespace mnt
     {
     public:
         application(){};
-        virtual ~application(){};
+        virtual ~application() {}
 
-        virtual b8 initialize() = 0;
-        virtual void shutdown() = 0;
+        virtual b8 initialize() { return true; }
+        virtual void shutdown() {};
 
-        virtual void update(f32 dt) = 0;
-        virtual void render() = 0;
+        virtual void update(f32 dt) { (void)dt; }
+        virtual void render() {}
 
-        virtual void on_event(event& event) = 0;
+        virtual void on_event(event& event) { (void)event; }
+        virtual void on_resize(u32 width, u32 height) { (void)width; (void)height; }
     };
 } // namespace mnt

@@ -16,6 +16,13 @@ namespace mnt::graphics
 		void bind() const override;
 		void unbind() const override;
 
+		void set_int1(const std::string& name, i32 value) override;
+
+		void set_float1(const std::string& name, f32 value) override;
+		void set_float2(const std::string& name, const math::vector2& value) override;
+		void set_float3(const std::string& name, const math::vector3& value) override;
+		void set_float4(const std::string& name, const math::vector4& value) override;
+
 	private:
 		b8 initialize_with_file(const std::string& vertex, const std::string& fragment);
 		b8 initialize_with_src(const std::string& vertex, const std::string& fragment);

@@ -12,8 +12,6 @@
 #include "mint/input/mouse_input.hpp"
 
 #include "mint/graphics/renderer.hpp"
-#include "mint/graphics/shader.hpp"
-
 
 namespace mnt
 {
@@ -65,11 +63,6 @@ namespace mnt
         input::mouse m_mouse;
 
         graphics::renderer* m_renderer;
-
-        graphics::shader* m_test;
-        u32 m_vao;
-        u32 m_vbo;
-        u32 m_ebo;
 
     private:
         static engine* s_instance;

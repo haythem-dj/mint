@@ -23,6 +23,10 @@ set(LIB_SRCS
     src/core/logger.cpp
     src/graphics/renderer.cpp
     src/graphics/shader.cpp
+    src/graphics/vbo.cpp
+    src/graphics/ebo.cpp
+    src/graphics/vao.cpp
+    src/graphics/texture.cpp
     src/input/key_input.cpp
     src/input/mouse_input.cpp
     src/math/math.cpp
@@ -31,9 +35,14 @@ set(LIB_SRCS
     src/platform/windows/windows_window.cpp
     src/render_backend/opengl/gl_renderer.cpp
     src/render_backend/opengl/gl_shader.cpp
+    src/render_backend/opengl/gl_vbo.cpp
+    src/render_backend/opengl/gl_ebo.cpp
+    src/render_backend/opengl/gl_vao.cpp
+    src/render_backend/opengl/gl_texture.cpp
 )
 
 add_subdirectory(external/glad)
+add_subdirectory(external/stb_image)
 
 add_library(mint SHARED ${LIB_SRCS})
 
@@ -49,6 +58,7 @@ target_include_directories(mint PUBLIC
 )
 
 target_link_libraries(mint PRIVATE glad)
+target_link_libraries(mint PRIVATE stb_image)
 
 target_compile_options(mint PRIVATE
     $<$<CXX_COMPILER_ID:GNU,Clang>:-Wall;-Wextra>

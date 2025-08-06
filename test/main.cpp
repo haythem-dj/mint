@@ -1,26 +1,65 @@
 #include <mint/mint.hpp>
 
-#include <mint/math/math.hpp>
-#include <mint/math/vector.hpp>
+struct mesh
+{
+    mnt::graphics::vao* vao;
+    mnt::graphics::vbo* vbo;
+    mnt::graphics::ebo* ebo;
 
-#include <iostream>
+    void initialize()
+    {
+        vao = mnt::graphics::vao::create();
+        vbo = mnt::graphics::vbo::create();
+        ebo = mnt::graphics::ebo::create();
+    }
+};
 
 class test_app : public mnt::application
 {
 public:
     b8 initialize() override
     {
+        m_engine = &mnt::engine::get();
+        m_renderer = &m_engine->get_renderer();
+
+        m_shader = mnt::graphics::shader::create();
+        m_shader->initialize(mnt::graphics::shader_init_type::file, "res/shaders/default.vert.glsl", "res/shaders/default.frag.glsl");
+
+        test_mesh.initialize();
+        test_mesh.vao->initialize();
+        {
+            f32 buffer[] = {
+                -0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   0.0f, 0.0f,
+                 0.0f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   0.5f, 1.0f,
+                 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   1.0f, 0.0f
+            };
+            test_mesh.vbo->initialize(sizeof(buffer), buffer);
+        }
+
+        {
+            u32 buffer[] = { 0, 1, 2 };
+            test_mesh.ebo->initialize(sizeof(buffer)/sizeof(u32), buffer);
+        }
+
+        m_tex = mnt::graphics::texture::create();
+        m_tex->initialize("res/textures/brick/brick_diffuse.png");
+
+        test_mesh.vao->add_vertex_buffer(test_mesh.vbo, {3, 4, 2});
+        test_mesh.vao->set_index_buffer(test_mesh.ebo);
+        
+        m_renderer->set_clear_color({0.9f, 0.15f, 0.74f, 1.0f});
+
+        m_shader->set_float4("u_color", { 1.0f, 0.0f, 0.0f, 1.0f });
+        m_shader->set_int1("u_diffuse", 0);
+
         return true;
     }
 
-    void shutdown() override {}
-
-    void update(f32 dt) override {}
-
     void render() override
     {
-        mnt::engine::get().get_renderer().set_clear_color({1.0f, 0.0f, 0.0f, 1.0f});
-        mnt::engine::get().get_renderer().clear();
+        m_renderer->clear();
+        m_tex->bind(0);
+        m_renderer->draw_indexed(test_mesh.vao, m_shader);
     }
 
     void on_event(mnt::event& e) override
@@ -34,13 +73,13 @@ public:
     }
 
 private:
-    b8 on_key_press(mnt::key_press& kp)
-    {
-        MINT_TRACE("%s", kp.to_string());
-        return false;
-    }
+    mnt::engine* m_engine = nullptr;
+    mnt::graphics::renderer* m_renderer = nullptr;
 
-private:
+    mnt::graphics::shader* m_shader;
+    mesh test_mesh;
+    mnt::graphics::texture* m_tex;
+
 };
 
 int main(void)

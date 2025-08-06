@@ -42,6 +42,36 @@ namespace mnt::graphics
 		glUseProgram(0);
 	}
 
+	void gl_shader::set_int1(const std::string& name, i32 value)
+	{
+		bind();
+		glUniform1i(glGetUniformLocation(m_id, name.c_str()), value);
+	}
+
+	void gl_shader::set_float1(const std::string& name, f32 value)
+	{
+		bind();
+		glUniform1f(glGetUniformLocation(m_id, name.c_str()), value);
+	}
+
+	void gl_shader::set_float2(const std::string& name, const math::vector2& value)
+	{
+		bind();
+		glUniform2f(glGetUniformLocation(m_id, name.c_str()), value.x, value.y);
+	}
+
+	void gl_shader::set_float3(const std::string& name, const math::vector3& value)
+	{
+		bind();
+		glUniform3f(glGetUniformLocation(m_id, name.c_str()), value.x, value.y, value.z);
+	}
+
+	void gl_shader::set_float4(const std::string& name, const math::vector4& value)
+	{
+		bind();
+		glUniform4f(glGetUniformLocation(m_id, name.c_str()), value.x, value.y, value.z, value.w);
+	}
+
 	b8 gl_shader::initialize_with_file(const std::string& vertex, const std::string& fragment)
 	{
 		std::string vertex_src = load_shader(vertex);

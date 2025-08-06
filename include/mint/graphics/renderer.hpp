@@ -7,6 +7,9 @@
 
 namespace mnt::graphics
 {
+    class vao;
+    class shader;
+    
     class MINT_API renderer
     {
     public:
@@ -21,6 +24,8 @@ namespace mnt::graphics
 
         virtual void set_clear_color(const math::vector4& color) = 0;
         virtual void clear() = 0;
+
+        virtual void draw_indexed(vao* vao, shader* shader) = 0;
 
         static renderer* create();
 
