@@ -1,6 +1,6 @@
-bin/
 .vscode/
 .cache/
+bin/
+scripts/
 
 compile_commands.json
-setup.bat

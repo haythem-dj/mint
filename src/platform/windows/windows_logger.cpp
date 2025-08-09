@@ -1,3 +1,5 @@
+#include "mint/common/defines.hpp"
+
 #ifdef MINT_PLATFORM_WINDOWS
 
 #include <windows.h>

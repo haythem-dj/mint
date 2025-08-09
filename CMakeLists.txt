@@ -7,17 +7,6 @@ project(mint VERSION 1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(configurations
-    debug
-    release
-)
-
-set(CMAKE_CONFIGURATION_TYPES "${configurations}")
-
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE debug)
-endif()
-
 set(LIB_SRCS
     src/core/engine.cpp
     src/core/logger.cpp
@@ -46,10 +35,7 @@ add_subdirectory(external/stb_image)
 
 add_library(mint SHARED ${LIB_SRCS})
 
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    target_compile_definitions(mint PUBLIC MINT_PLATFORM_LINUX)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    target_compile_definitions(mint PUBLIC MINT_PLATFORM_WINDOWS)
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     target_link_libraries(mint PUBLIC opengl32)
 endif()
 
@@ -66,8 +52,6 @@ target_compile_options(mint PRIVATE
 )
 
 target_compile_definitions(mint PRIVATE
-    $<$<CONFIG:debug>:MINT_CONFIG_DEBUG>
-    $<$<CONFIG:release>:MINT_CONFIG_RELEASE>
     MINT_EXPORT
 )
 

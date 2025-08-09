@@ -19,27 +19,35 @@ typedef bool b8;
 typedef float f32;
 typedef double f64;
 
-#ifdef MINT_PLATFORM_WINDOWS
-#ifdef MINT_EXPORT
-#define MINT_API __declspec(dllexport)
+#if defined(_WIN32) || defined(_WIN64)
+    #define MINT_PLATFORM_WINDOWS
 #else
-#define MINT_API __declspec(dllimport)
-#endif
+    #error "Unknown or unsupported operating system" 
 #endif
 
-#ifdef MINT_PLATFORM_LINUX
-#ifdef MINT_EXPORT
-#define MINT_API __attribute_((visibility("default")))
-#else
-#define MINT_API
-#endif
+#ifdef MINT_PLATFORM_WINDOWS
+    #ifdef MINT_EXPORT
+        #define MINT_API __declspec(dllexport)
+    #else
+        #define MINT_API __declspec(dllimport)
+    #endif
 #endif
 
 #ifdef _MSC_VER
-#define MINT_DEBUGBREAK() __debugbreak()
+    #define MINT_DEBUGBREAK() __debugbreak()
+    #ifdef _DEBUG
+        #define MINT_CONFIG_DEBUG
+    #else
+        #define MINT_CONFIG_RELEASE
+    #endif
 #elif defined(__clang__) || defined(__GNUC__)
-#define MINT_DEBUGBREAK() __builtin_trap()
+    #define MINT_DEBUGBREAK() __builtin_trap()
+    #ifdef NDEBUG
+        #define MINT_CONFIG_RELEASE
+    #else
+        #define MINT_CONFIG_DEBUG
+    #endif
 #else
-#warning "MINT_DEBUGBREAK is not defined for this compiler/platform."
-#define MINT_DEBUGBREAK() ((void)0) // Placeholder for unsupported platforms
+    #warning "MINT_DEBUGBREAK is not defined for this compiler/platform."
+    #define MINT_DEBUGBREAK() ((void)0)
 #endif
