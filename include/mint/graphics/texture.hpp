@@ -3,6 +3,7 @@
 #include "mint/common/defines.hpp"
 
 #include <string>
+#include <memory>
 
 namespace mnt::graphics
 {
@@ -20,7 +21,7 @@ namespace mnt::graphics
 
         u32 get_id() const { return m_id; }
 
-        static texture* create();
+        static std::shared_ptr<texture> create();
 
     protected:
         u32 m_id = 0;

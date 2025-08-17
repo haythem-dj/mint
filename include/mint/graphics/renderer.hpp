@@ -25,7 +25,7 @@ namespace mnt::graphics
         virtual void set_clear_color(const math::vector4& color) = 0;
         virtual void clear() = 0;
 
-        virtual void draw_indexed(vao* vao, shader* shader) = 0;
+        virtual void draw_indexed(std::shared_ptr<vao> vao, std::shared_ptr<shader> shader) = 0;
 
         static renderer* create();
 

@@ -10,8 +10,8 @@ namespace mnt::graphics
     vao::~vao()
     {}
 
-    vao* vao::create()
+    std::shared_ptr<vao> vao::create()
     {
-        return new gl_vao();
+        return std::make_shared<gl_vao>();
     }
 }

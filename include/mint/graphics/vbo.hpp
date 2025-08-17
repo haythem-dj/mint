@@ -2,6 +2,8 @@
 
 #include "mint/common/defines.hpp"
 
+#include <memory>
+
 namespace mnt::graphics
 {
     class MINT_API vbo
@@ -18,7 +20,7 @@ namespace mnt::graphics
 
         u32 get_id() const { return m_id; }
 
-        static vbo* create();
+        static std::shared_ptr<vbo> create();
 
     protected:
         u32 m_id = 0;

@@ -10,8 +10,8 @@ namespace mnt::graphics
     ebo::~ebo()
     {}
 
-    ebo* ebo::create()
+    std::shared_ptr<ebo> ebo::create()
     {
-        return new gl_ebo();
+        return std::make_shared<gl_ebo>();
     }
 }

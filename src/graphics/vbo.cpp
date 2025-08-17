@@ -10,8 +10,8 @@ namespace mnt::graphics
     vbo::~vbo()
     {}
 
-    vbo* vbo::create()
+    std::shared_ptr<vbo> vbo::create()
     {
-        return new gl_vbo();
+        return std::make_shared<gl_vbo>();
     }
 }

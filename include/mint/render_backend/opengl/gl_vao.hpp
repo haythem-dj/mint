@@ -16,15 +16,15 @@ namespace mnt::graphics
         void bind() const override;
         void unbind() const override;
 
-        void add_vertex_buffer(vbo* vbo, const std::vector<u32>& layout) override;
-        void set_index_buffer(ebo* ebo) override { m_ebo = ebo; }
+        void add_vertex_buffer(std::shared_ptr<vbo> vbo, const std::vector<u32>& layout) override;
+        void set_index_buffer(std::shared_ptr<ebo> ebo) override { m_ebo = ebo; }
 
         u32 get_element_count() const override;
 
     private:
         b8 m_is_initialized = false;
 
-        ebo* m_ebo = nullptr;
+        std::shared_ptr<ebo> m_ebo = nullptr;
 
         u32 m_index = 0;
         

@@ -10,8 +10,8 @@ namespace mnt::graphics
 	shader::~shader()
 	{}
 
-	shader* shader::create()
+	std::shared_ptr<shader> shader::create()
 	{
-		return new gl_shader();
+		return std::make_shared<gl_shader>();
 	}
 }

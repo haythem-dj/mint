@@ -63,7 +63,7 @@ namespace mnt::graphics
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    void gl_renderer::draw_indexed(vao* vao, shader* shader)
+    void gl_renderer::draw_indexed(std::shared_ptr<vao> vao, std::shared_ptr<shader> shader)
     {
         if (!vao)
         {

@@ -21,7 +21,7 @@ namespace mnt::graphics
         void set_clear_color(const math::vector4& color) override;
         void clear() override;
 
-        void draw_indexed(vao* vao, shader* shader) override;
+        void draw_indexed(std::shared_ptr<vao> vao, std::shared_ptr<shader> shader) override;
 
     private:
         b8 m_is_initialized = false;

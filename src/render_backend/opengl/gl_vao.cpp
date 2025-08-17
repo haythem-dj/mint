@@ -48,7 +48,7 @@ namespace mnt::graphics
         m_ebo->unbind();
     }
 
-    void gl_vao::add_vertex_buffer(vbo* vbo, const std::vector<u32>& layout)
+    void gl_vao::add_vertex_buffer(std::shared_ptr<vbo> vbo, const std::vector<u32>& layout)
     {
         u32 stride = 0;
         for (u32 i : layout) stride += i;

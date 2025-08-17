@@ -6,6 +6,7 @@
 
 #include <string>
 #include <filesystem>
+#include <memory>
 
 namespace mnt::graphics
 {
@@ -30,7 +31,7 @@ namespace mnt::graphics
 
 		u32 get_id() const { return m_id; }
 
-		static shader* create();
+		static std::shared_ptr<shader> create();
 
 	protected:
 		u32 m_id = 0;

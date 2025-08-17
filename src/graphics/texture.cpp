@@ -10,8 +10,8 @@ namespace mnt::graphics
     texture::~texture()
     {}
 
-    texture* texture::create()
+    std::shared_ptr<texture> texture::create()
     {
-        return new gl_texture();
+        return std::make_shared<gl_texture>();
     }
 }
