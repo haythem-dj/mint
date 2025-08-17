@@ -23,7 +23,7 @@ public:
         m_renderer = &m_engine->get_renderer();
 
         m_shader = mnt::graphics::shader::create();
-        m_shader->initialize(mnt::graphics::shader_init_type::file, "res/shaders/default.vert.glsl", "res/shaders/default.frag.glsl");
+        m_shader->initialize("res/shaders/default.vert.glsl", "res/shaders/default.frag.glsl");
 
         test_mesh.initialize();
         test_mesh.vao->initialize();
