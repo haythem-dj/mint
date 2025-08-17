@@ -5,6 +5,8 @@
 #include "mint/math/vector.hpp"
 #include "mint/core/window.hpp"
 
+#include <memory>
+
 namespace mnt::graphics
 {
     class vao;
