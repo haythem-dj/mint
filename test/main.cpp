@@ -28,49 +28,51 @@ public:
     {
         m_engine = &mnt::engine::get();
         m_renderer = &m_engine->get_renderer();
-
+        
         m_shader = mnt::graphics::shader::create();
         m_shader->initialize("res/shaders/default.vert.glsl", "res/shaders/default.frag.glsl");
-
+        
         m_mesh.initialize();
         m_mesh.vao->initialize();
         {
             f32 buffer[] = {
                 -0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   0.0f, 0.0f,
-                 0.0f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   0.5f, 1.0f,
-                 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   1.0f, 0.0f
+                0.0f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   0.5f, 1.0f,
+                0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   1.0f, 0.0f
             };
             m_mesh.vbo->initialize(sizeof(buffer), buffer);
         }
-
+        
         {
             u32 buffer[] = { 0, 1, 2 };
             m_mesh.ebo->initialize(sizeof(buffer)/sizeof(u32), buffer);
         }
-
+        
         m_tex = mnt::graphics::texture::create();
         m_tex->initialize("res/textures/brick/brick_diffuse.png");
-
+        
         m_mesh.vao->add_vertex_buffer(m_mesh.vbo, {3, 4, 2});
         m_mesh.vao->set_index_buffer(m_mesh.ebo);
         
         m_renderer->set_clear_color({0.9f, 0.15f, 0.74f, 1.0f});
-
+        
         m_shader->set_float4("u_color", { 1.0f, 0.0f, 0.0f, 1.0f });
         m_shader->set_int1("u_diffuse", 0);
-
+        
+        
         return true;
     }
-
+    
     void shutdown() override
     {
         m_tex->shutdown();
         m_mesh.shutdown();
         m_shader->shutdown();
     }
-
+    
     void render() override
     {
+        mnt::scoped_timer timer("app::render");
         m_renderer->clear();
         m_tex->bind(0);
         m_renderer->draw_indexed(m_mesh.vao, m_shader);
@@ -93,6 +95,8 @@ private:
     std::shared_ptr<mnt::graphics::shader> m_shader;
     mesh m_mesh;
     std::shared_ptr<mnt::graphics::texture> m_tex;
+
+    mnt::timer m_timer;
 
 };
 

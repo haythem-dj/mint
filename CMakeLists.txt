@@ -10,6 +10,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(LIB_SRCS
     src/core/engine.cpp
     src/core/logger.cpp
+    src/core/timer.cpp
+    src/core/scoped_timer.cpp
     src/graphics/renderer.cpp
     src/graphics/shader.cpp
     src/graphics/vbo.cpp
