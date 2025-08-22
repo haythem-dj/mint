@@ -4,7 +4,7 @@
 
 #include "mint/input/mouse_buttons.hpp"
 
-#include "mint/math/vector.hpp"
+#include "mint/math/vector2.hpp"
 
 namespace mnt::input
 {

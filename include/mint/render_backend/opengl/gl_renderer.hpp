@@ -1,7 +1,5 @@
 #pragma once
 
-#include "mint/common/defines.hpp"
-
 #include "mint/graphics/renderer.hpp"
 
 namespace mnt::graphics
@@ -14,6 +12,8 @@ namespace mnt::graphics
 
         b8 initialize(window* win) override;
         void shutdown() override;
+
+        void on_resize(u32 width, u32 height) override;
 
         void begin_render() override;
         void end_render() override;

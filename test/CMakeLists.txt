@@ -1,6 +1,10 @@
 project(mint_test VERSION 1.0 LANGUAGES CXX)
 
-add_executable(mint_test main.cpp)
+add_executable(mint_test
+    main.cpp
+    test.cpp
+    player.cpp
+)
 target_link_libraries(mint_test PRIVATE mint)
 
 target_compile_options(mint PRIVATE

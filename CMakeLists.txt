@@ -21,7 +21,9 @@ set(LIB_SRCS
     src/input/key_input.cpp
     src/input/mouse_input.cpp
     src/math/math.cpp
-    src/math/vector.cpp
+    src/math/vector2.cpp
+    src/math/vector3.cpp
+    src/math/vector4.cpp
     src/platform/windows/windows_logger.cpp
     src/platform/windows/windows_window.cpp
     src/render_backend/opengl/gl_renderer.cpp

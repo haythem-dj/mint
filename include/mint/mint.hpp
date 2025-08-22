@@ -25,4 +25,6 @@
 #include "mint/input/mouse_input.hpp"
 
 #include "mint/math/math.hpp"
-#include "mint/math/vector.hpp"
+#include "mint/math/vector2.hpp"
+#include "mint/math/vector3.hpp"
+#include "mint/math/vector4.hpp"

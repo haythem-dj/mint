@@ -9,6 +9,7 @@
 #include "mint/core/engine.hpp"
 #include "mint/core/logger.hpp"
 #include "mint/core/window.hpp"
+#include "mint/core/scoped_timer.hpp"
 
 #include "mint/event/key_events.hpp"
 #include "mint/event/mouse_events.hpp"
@@ -291,6 +292,12 @@ namespace mnt
         if (!m_is_initialized) return;
 
         SwapBuffers(state.device_context);
+    }
+
+    void window::on_resize(u32 width, u32 height)
+    {
+        m_props.width = width;
+        m_props.height = height;
     }
 
     void* window::get_window_handle() const

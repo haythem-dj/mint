@@ -2,10 +2,10 @@
 
 #include "mint/common/defines.hpp"
 
-#include "mint/event/event.hpp"
-
 namespace mnt
 {
+    class event;
+
     class MINT_API application
     {
     public:

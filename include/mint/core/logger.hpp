@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>
-
 #include "mint/common/defines.hpp"
+
+#include <string>
 
 namespace mnt
 {

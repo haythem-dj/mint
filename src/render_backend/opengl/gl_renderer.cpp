@@ -5,6 +5,8 @@
 #include "mint/graphics/vao.hpp"
 #include "mint/graphics/shader.hpp"
 
+#include "mint/math/vector4.hpp"
+
 #include <glad/gl.h>
 
 namespace mnt::graphics
@@ -26,6 +28,10 @@ namespace mnt::graphics
         }
 
         m_window = win;
+
+        glDisable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
         MINT_INFO("GL Renderer initialized.");
         m_is_initialized = true;
@@ -39,9 +45,13 @@ namespace mnt::graphics
         m_window = nullptr;
     }
 
+    void gl_renderer::on_resize(u32 width, u32 height)
+    {
+        glViewport(0, 0, width, height);
+    }
+
     void gl_renderer::begin_render()
     {
-        m_window->make_current_context();
     }
 
     void gl_renderer::end_render()

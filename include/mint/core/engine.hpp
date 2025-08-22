@@ -4,18 +4,24 @@
 
 #include "mint/core/logger.hpp"
 #include "mint/core/window.hpp"
-
-#include "mint/event/event.hpp"
-#include "mint/event/window_events.hpp"
+#include "mint/core/timer.hpp"
 
 #include "mint/input/key_input.hpp"
 #include "mint/input/mouse_input.hpp"
 
-#include "mint/graphics/renderer.hpp"
-
 namespace mnt
 {
     class application;
+
+    class event;
+    class window_close;
+    class window_resize;
+    
+    namespace graphics
+    {
+        class renderer;
+    }
+
     class MINT_API engine
     {
     public:
@@ -61,6 +67,8 @@ namespace mnt
         window m_window;
         input::keyboard m_keyboard;
         input::mouse m_mouse;
+
+        timer m_timer;
 
         graphics::renderer* m_renderer;
 

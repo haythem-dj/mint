@@ -25,6 +25,7 @@ namespace mnt
         void process_messages();
         b8 make_current_context();
         void swap_buffers();
+        void on_resize(u32 width, u32 height);
 
         void* get_window_handle() const;
 

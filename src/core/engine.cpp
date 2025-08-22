@@ -1,9 +1,13 @@
 #include "mint/core/engine.hpp"
 
 #include "mint/core/application.hpp"
-#include "mint/core/window.hpp"
+#include "mint/core/logger.hpp"
+#include "mint/core/scoped_timer.hpp"
 
-#include <glad/gl.h>
+#include "mint/event/event.hpp"
+#include "mint/event/window_events.hpp"
+
+#include "mint/graphics/renderer.hpp"
 
 namespace mnt
 {
@@ -70,10 +74,15 @@ namespace mnt
 
     void engine::run()
     {
+        f32 dt = 1;
         while (m_is_running)
         {
-            update(1);
+            m_timer.reset();
+
+            update(dt);
             render();
+
+            dt = (f32)m_timer.elapsed();
         }
     }
 
@@ -100,7 +109,11 @@ namespace mnt
 
     b8 engine::on_window_resize(window_resize& wr)
     {
-        m_app->on_resize(wr.get_width(), wr.get_height());
+        u32 width = wr.get_width();
+        u32 height = wr.get_height();
+        m_window.on_resize(width, height);
+        m_renderer->on_resize(width, height);
+        m_app->on_resize(width, height);
         return false;
     }
 } // namespace mnt

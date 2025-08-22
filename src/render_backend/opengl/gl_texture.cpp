@@ -29,7 +29,7 @@ namespace mnt::graphics
 
         if (!data)
         {
-            MINT_ERROR("texture::initialize - could not open file: %s", path);
+            MINT_ERROR("texture::initialize - could not open file: %s", path.c_str());
             return false;
         }
 

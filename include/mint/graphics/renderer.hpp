@@ -2,10 +2,18 @@
 
 #include "mint/common/defines.hpp"
 
-#include "mint/math/vector.hpp"
-#include "mint/core/window.hpp"
-
 #include <memory>
+
+namespace mnt
+{
+    class window;
+}
+
+namespace mnt::math
+{
+    class vector2;
+    class vector4;
+}
 
 namespace mnt::graphics
 {
@@ -20,6 +28,8 @@ namespace mnt::graphics
 
         virtual b8 initialize(window* win) = 0;
         virtual void shutdown() = 0;
+
+        virtual void on_resize(u32 width, u32 height) = 0;
 
         virtual void begin_render() = 0;
         virtual void end_render() = 0;

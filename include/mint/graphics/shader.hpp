@@ -2,11 +2,16 @@
 
 #include "mint/common/defines.hpp"
 
-#include "mint/math/vector.hpp"
-
 #include <string>
 #include <filesystem>
 #include <memory>
+
+namespace mnt::math
+{
+	class vector2;
+	class vector3;
+	class vector4;
+}
 
 namespace mnt::graphics
 {

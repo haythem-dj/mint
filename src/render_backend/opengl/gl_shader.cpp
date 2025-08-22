@@ -3,6 +3,10 @@
 #include "mint/core/engine.hpp"
 #include "mint/core/logger.hpp"
 
+#include "mint/math/vector2.hpp"
+#include "mint/math/vector3.hpp"
+#include "mint/math/vector4.hpp"
+
 #include <glad/gl.h>
 
 #include <fstream>
@@ -107,7 +111,7 @@ namespace mnt::graphics
 			glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
 			const char* err = (char*)malloc(length * sizeof(char));
 			glGetShaderInfoLog(shader, length, &length, (GLchar*)err);
-			MINT_ERROR("%s shader compilation error: %s", type == GL_VERTEX_SHADER ? "vertex" : "fragment", err);
+			MINT_ERROR("shader::initialize - %s shader compilation error: %s", type == GL_VERTEX_SHADER ? "vertex" : "fragment", err);
 		}
 
 		return shader;
@@ -118,7 +122,7 @@ namespace mnt::graphics
 		std::ifstream shader(file_path);
 		if (!shader.is_open())
 		{
-			MINT_ERROR("unable to open file: %s", file_path);
+			MINT_ERROR("shader::initialize - unable to open file: %s", file_path.string().c_str());
 			return std::string();
 		}
 
