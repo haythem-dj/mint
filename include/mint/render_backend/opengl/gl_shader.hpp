@@ -23,6 +23,9 @@ namespace mnt::graphics
 		void set_float3(const std::string& name, const math::vector3& value) override;
 		void set_float4(const std::string& name, const math::vector4& value) override;
 
+		void set_matrix3(const std::string& name, const math::matrix3& mat) override;
+		void set_matrix4(const std::string& name, const math::matrix4& mat) override;
+
 	private:
 		u32 compile_shader(u32 type, const char* src);
 		std::string load_shader(const std::filesystem::path& file_path);

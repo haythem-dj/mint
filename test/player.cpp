@@ -41,6 +41,7 @@ void player::shutdown()
 void player::update(f32 dt)
 {
     move(dt);
+    m_transform.translate(mnt::math::vector3(m_position.x, m_position.y, 0));
 
     m_direction.normalize();
     m_velocity = m_direction * m_speed * dt;
@@ -48,13 +49,13 @@ void player::update(f32 dt)
     m_position += m_velocity;
 
     m_shader->bind();
-    m_shader->set_float2("u_position", m_position);
+    m_shader->set_int1("u_diffuse", 0);
+    m_shader->set_matrix4("u_transform", m_transform);
 }
 
 void player::render(mnt::graphics::renderer& renderer)
 {
     m_texture->bind(0);
-    m_shader->set_int1("u_diffuse", 0);
     renderer.draw_indexed(m_vao, m_shader);
 }
 

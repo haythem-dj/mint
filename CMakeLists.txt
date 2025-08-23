@@ -24,6 +24,8 @@ set(LIB_SRCS
     src/math/vector2.cpp
     src/math/vector3.cpp
     src/math/vector4.cpp
+    src/math/matrix3.cpp
+    src/math/matrix4.cpp
     src/platform/windows/windows_logger.cpp
     src/platform/windows/windows_window.cpp
     src/render_backend/opengl/gl_renderer.cpp

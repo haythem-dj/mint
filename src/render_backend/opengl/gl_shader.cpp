@@ -7,6 +7,9 @@
 #include "mint/math/vector3.hpp"
 #include "mint/math/vector4.hpp"
 
+#include "mint/math/matrix3.hpp"
+#include "mint/math/matrix4.hpp"
+
 #include <glad/gl.h>
 
 #include <fstream>
@@ -92,6 +95,18 @@ namespace mnt::graphics
 	{
 		bind();
 		glUniform4f(glGetUniformLocation(m_id, name.c_str()), value.x, value.y, value.z, value.w);
+	}
+
+	void gl_shader::set_matrix3(const std::string& name, const math::matrix3& mat)
+	{
+		bind();
+		glUniformMatrix3fv(glGetUniformLocation(m_id, name.c_str()), 1, GL_TRUE, &mat.data[0][0]);
+	}
+
+	void gl_shader::set_matrix4(const std::string& name, const math::matrix4& mat)
+	{
+		bind();
+		glUniformMatrix4fv(glGetUniformLocation(m_id, name.c_str()), 1, GL_TRUE, &mat.data[0][0]);
 	}
 
 	u32 gl_shader::compile_shader(u32 type, const char* src)

@@ -25,5 +25,7 @@ private:
     mnt::math::vector2 m_velocity{0.0f, 0.0f};
     mnt::math::vector2 m_direction{0.0f, 0.0f};
 
+    mnt::math::matrix4 m_transform;
+
     const f32 m_speed = 3.0f;
 };

@@ -11,6 +11,8 @@ namespace mnt::math
 	class vector2;
 	class vector3;
 	class vector4;
+	class matrix3;
+	class matrix4;
 }
 
 namespace mnt::graphics
@@ -33,6 +35,9 @@ namespace mnt::graphics
 		virtual void set_float2(const std::string& name, const math::vector2& value) = 0;
 		virtual void set_float3(const std::string& name, const math::vector3& value) = 0;
 		virtual void set_float4(const std::string& name, const math::vector4& value) = 0;
+
+		virtual void set_matrix3(const std::string& name, const math::matrix3& mat) = 0;
+		virtual void set_matrix4(const std::string& name, const math::matrix4& mat) = 0;
 
 		u32 get_id() const { return m_id; }
 
