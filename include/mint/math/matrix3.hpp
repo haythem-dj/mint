@@ -17,9 +17,6 @@ namespace mnt::math
         matrix3(f32 value);
         matrix3(std::initializer_list<f32> values);
 
-        void translate(const vector2& vec);
-        void scale(const vector2& vec);
-
         f32* operator[](u32 index);
         const f32* operator[](u32 index) const;
 
@@ -47,4 +44,7 @@ namespace mnt::math
     MINT_API matrix3 operator+(f32 scalar, const matrix3& mat);
     MINT_API matrix3 operator-(f32 scalar, const matrix3& mat);
     MINT_API matrix3 operator*(f32 scalar, const matrix3& mat);
+
+    MINT_API matrix3 translate(const vector2& vec);
+    MINT_API matrix3 scale(const vector2& vec);
 }

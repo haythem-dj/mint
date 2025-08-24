@@ -1,5 +1,6 @@
 #include "mint/math/matrix4.hpp"
 
+#include "mint/math/math.hpp"
 #include "mint/math/vector3.hpp"
 
 namespace mnt::math
@@ -178,31 +179,47 @@ namespace mnt::math
         return mat * scalar;
     }
 
-    void matrix4::translate(const vector3& vec)
+    matrix4 translate(const vector3& vec)
     {
-        data[0][3] = vec.x;
-        data[1][3] = vec.y;
-        data[2][3] = vec.z;
-    }
-
-    void matrix4::scale(const vector3& vec)
-    {
-        data[0][0] = vec.x;
-        data[1][1] = vec.y;
-        data[2][2] = vec.z;
-    }
-
-    matrix4 translate(const matrix4& mat, const vector3& vec)
-    {
-        matrix4 res = mat;
-        res.translate(vec);
+        matrix4 res;
+        res[0][3] = vec.x;
+        res[1][3] = vec.y;
+        res[2][3] = vec.z;
         return res;
     }
 
-    matrix4 scale(const matrix4& mat, const vector3& vec)
+    matrix4 scale(const vector3& vec)
     {
-        matrix4 res = mat;
-        res.scale(vec);
+        matrix4 res;
+        res[0][0] = vec.x;
+        res[1][1] = vec.y;
+        res[2][2] = vec.z;
         return res;
+    }
+
+    matrix4 rotate(const vector3& vec)
+    {
+        matrix4 rot_x({
+            1.0f, 0.0f,       0.0f,        0.0f,
+            0.0f, cos(vec.x), -sin(vec.x), 0.0f,
+            0.0f, sin(vec.x), cos(vec.x),  0.0f ,
+            0.0f, 0.0f,       0.0f,        1.0f,
+        });
+
+        matrix4 rot_y({
+            cos(vec.y),  0.0f, sin(vec.y), 0.0f,
+            0.0f,        1.0f, 0.0f,       0.0f,
+            -sin(vec.y), 0.0f, cos(vec.y), 0.0f,
+            0.0f,        0.0f, 0.0f,       1.0f
+        });
+
+        matrix4 rot_z({
+            cos(vec.z), -sin(vec.z), 0.0f, 0.0f,
+            sin(vec.z), cos(vec.z),  0.0f, 0.0f,
+            0.0f,       0.0f,        1.0f, 0.0f,
+            0.0f,       0.0f,        0.0f, 1.0f
+        });
+
+        return rot_z * rot_x * rot_y;
     }
 }

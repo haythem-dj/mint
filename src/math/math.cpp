@@ -6,7 +6,7 @@ namespace mnt::math
 {
 	f32 cos(f32 x)
 	{
-		return std::cos(x);
+		return std::cos(M_DEG2RAD(x));
 	}
 
 	f32 sin(f32 x)

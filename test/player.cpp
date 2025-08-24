@@ -1,5 +1,7 @@
 #include "player.hpp"
 
+#include <math.h>
+
 b8 player::initialize(const mnt::math::vector2& position)
 {
     m_position = position;
@@ -40,13 +42,20 @@ void player::shutdown()
 
 void player::update(f32 dt)
 {
+    rotate(dt);
+
+    m_rotation += m_rotation_velocity;
+    mnt::math::matrix4 rot = mnt::math::rotate(m_rotation);
+    
     move(dt);
-    m_transform.translate(mnt::math::vector3(m_position.x, m_position.y, 0));
 
     m_direction.normalize();
     m_velocity = m_direction * m_speed * dt;
-
+    
     m_position += m_velocity;
+    mnt::math::matrix4 tra = mnt::math::translate(mnt::math::vector3(m_position.x, m_position.y, 0));
+
+    m_transform = tra * rot;
 
     m_shader->bind();
     m_shader->set_int1("u_diffuse", 0);
@@ -57,6 +66,21 @@ void player::render(mnt::graphics::renderer& renderer)
 {
     m_texture->bind(0);
     renderer.draw_indexed(m_vao, m_shader);
+}
+
+void player::rotate(f32 dt)
+{
+    if (MINT_IS_KEY_DOWN(mnt::input::key_code::left)) m_rotation_velocity.z = m_rotation_speed * dt;
+    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::right)) m_rotation_velocity.z = -m_rotation_speed * dt;
+    else m_rotation_velocity.z = 0.0f;
+
+    if (MINT_IS_KEY_DOWN(mnt::input::key_code::up)) m_rotation_velocity.x = m_rotation_speed * dt;
+    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::down)) m_rotation_velocity.x = -m_rotation_speed * dt;
+    else m_rotation_velocity.x = 0.0f;
+    
+    if (MINT_IS_KEY_DOWN(mnt::input::key_code::k)) m_rotation_velocity.y = m_rotation_speed * dt;
+    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::l)) m_rotation_velocity.y = -m_rotation_speed * dt;
+    else m_rotation_velocity.y = 0.0f;
 }
 
 void player::move(f32 dt)

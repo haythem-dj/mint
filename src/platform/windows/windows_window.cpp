@@ -232,6 +232,14 @@ namespace mnt
 
         MINT_TRACE("OpenGL Version: %s", glGetString(GL_VERSION));
         MINT_TRACE("OpenGL Renderer: %s", glGetString(GL_RENDERER));
+
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
+
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        glFrontFace(GL_CCW);
+        
         glViewport(0, 0, props.width, props.height);
 
         MINT_INFO("Window initialized.");

@@ -178,29 +178,19 @@ namespace mnt::math
         return mat * scalar;
     }
 
-    void matrix3::translate(const vector2& vec)
+    matrix3 translate(const vector2& vec)
     {
-        data[0][2] = vec.x;
-        data[1][2] = vec.y;
-    }
-
-    void matrix3::scale(const vector2& vec)
-    {
-        data[0][0] = vec.x;
-        data[1][1] = vec.y;
-    }
-
-    matrix3 translate(const matrix3& mat, const vector2& vec)
-    {
-        matrix3 res = mat;
-        res.translate(vec);
+        matrix3 res;
+        res[0][2] = vec.x;
+        res[1][2] = vec.y;
         return res;
     }
 
-    matrix3 scale(const matrix3& mat, const vector2& vec)
+    matrix3 scale(const vector2& vec)
     {
-        matrix3 res = mat;
-        res.scale(vec);
+        matrix3 res;
+        res[0][0] = vec.x;
+        res[1][1] = vec.y;
         return res;
     }
 }
