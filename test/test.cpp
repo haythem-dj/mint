@@ -37,3 +37,8 @@ void test::on_event(mnt::event& event)
             m_engine->stop();
     }
 }
+
+void test::on_resize(u32 width, u32 height)
+{
+    m_player.on_resize(width, height);
+}

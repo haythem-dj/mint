@@ -4,16 +4,14 @@
 
 b8 player::initialize(const mnt::math::vector2& position)
 {
-    m_position = position;
-
     m_shader->initialize("res/shaders/test.vert.glsl", "res/shaders/test.frag.glsl");
     m_vao->initialize();
 
     f32 rect[] = {
-        -0.2f, -0.2f, 0.0f, 0.0f, 0.0f,
-        0.2f, -0.2f, 0.0f, 1.0f, 0.0f,
-        0.2f,  0.2f, 0.0f, 1.0f, 1.0f,
-        -0.2f,  0.2f, 0.0f, 0.0f, 1.0f
+        -2.0f, -2.0f, 0.0f, 0.0f, 0.0f,
+        2.0f, -2.0f, 0.0f, 1.0f, 0.0f,
+        2.0f,  2.0f, 0.0f, 1.0f, 1.0f,
+        -2.0f,  2.0f, 0.0f, 0.0f, 1.0f
     };
 
     m_vbo->initialize(sizeof(rect), rect);
@@ -25,8 +23,18 @@ b8 player::initialize(const mnt::math::vector2& position)
 
     m_ebo->initialize(6, rect_ind);
     m_vao->set_index_buffer(m_ebo);
-
+    
     m_texture->initialize("res/textures/player.png");
+
+    mnt::math::matrix4 tra = mnt::math::translate({ 0.0f, 0.0f, 0.0f });
+    mnt::math::matrix4 rot = mnt::math::rotate({ 0.0f, 0.0f, 0.0f });
+
+    m_transform = tra * rot;
+
+    m_camera.initialize({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, -1.0f });
+
+    m_camera.on_resize(800, 600);
+    m_camera.update();
 
     return true;
 }
@@ -42,24 +50,16 @@ void player::shutdown()
 
 void player::update(f32 dt)
 {
-    rotate(dt);
-
-    m_rotation += m_rotation_velocity;
-    mnt::math::matrix4 rot = mnt::math::rotate(m_rotation);
-    
     move(dt);
-
-    m_direction.normalize();
-    m_velocity = m_direction * m_speed * dt;
+    rotate(dt);
     
-    m_position += m_velocity;
-    mnt::math::matrix4 tra = mnt::math::translate(mnt::math::vector3(m_position.x, m_position.y, 0));
-
-    m_transform = tra * rot;
+    m_camera.update();
 
     m_shader->bind();
     m_shader->set_int1("u_diffuse", 0);
     m_shader->set_matrix4("u_transform", m_transform);
+    m_shader->set_matrix4("u_view", m_camera.get_view());
+    m_shader->set_matrix4("u_projection", m_camera.get_projection());
 }
 
 void player::render(mnt::graphics::renderer& renderer)
@@ -68,28 +68,36 @@ void player::render(mnt::graphics::renderer& renderer)
     renderer.draw_indexed(m_vao, m_shader);
 }
 
+void player::on_resize(u32 width, u32 height)
+{
+    m_camera.on_resize(width, height);
+}
+
 void player::rotate(f32 dt)
 {
-    if (MINT_IS_KEY_DOWN(mnt::input::key_code::left)) m_rotation_velocity.z = m_rotation_speed * dt;
-    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::right)) m_rotation_velocity.z = -m_rotation_speed * dt;
-    else m_rotation_velocity.z = 0.0f;
+    m_rotation = 0.0f;
 
-    if (MINT_IS_KEY_DOWN(mnt::input::key_code::up)) m_rotation_velocity.x = m_rotation_speed * dt;
-    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::down)) m_rotation_velocity.x = -m_rotation_speed * dt;
-    else m_rotation_velocity.x = 0.0f;
+    if (MINT_IS_KEY_DOWN(mnt::input::key_code::left)) m_rotation -= m_rotation_speed * m_camera.get_up() * dt;
+    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::right)) m_rotation += m_rotation_speed * m_camera.get_up() * dt;
+    
+    if (MINT_IS_KEY_DOWN(mnt::input::key_code::up)) m_rotation += m_rotation_speed * m_camera.get_right() * dt;
+    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::down)) m_rotation -= m_rotation_speed * m_camera.get_right() * dt;
     
     if (MINT_IS_KEY_DOWN(mnt::input::key_code::k)) m_rotation_velocity.y = m_rotation_speed * dt;
     else if (MINT_IS_KEY_DOWN(mnt::input::key_code::l)) m_rotation_velocity.y = -m_rotation_speed * dt;
-    else m_rotation_velocity.y = 0.0f;
+
+    mnt::math::vector4 forward = mnt::math::vector4(m_camera.get_forward().x, m_camera.get_forward().y, m_camera.get_forward().z, 1.0f);
+    mnt::math::vector4 new_forward = mnt::math::rotate(m_rotation) * forward;
+    m_camera.set_forward(mnt::math::vector3(new_forward.x, new_forward.y, new_forward.z));
 }
 
 void player::move(f32 dt)
 {
-    if (MINT_IS_KEY_DOWN(mnt::input::key_code::q)) m_direction.x = -1.0f;
-    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::d)) m_direction.x = 1.0f;
-    else m_direction.x = 0.0f;
+    if (MINT_IS_KEY_DOWN(mnt::input::key_code::q)) m_position -= m_camera.get_right() * m_speed * dt;
+    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::d)) m_position += m_camera.get_right() * m_speed * dt;
 
-    if (MINT_IS_KEY_DOWN(mnt::input::key_code::s)) m_direction.y = -1.0f;
-    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::z)) m_direction.y = 1.0f;
-    else m_direction.y = 0.0f;
+    if (MINT_IS_KEY_DOWN(mnt::input::key_code::s)) m_position -= m_camera.get_up() * m_speed * dt;
+    else if (MINT_IS_KEY_DOWN(mnt::input::key_code::z)) m_position += m_camera.get_up() * m_speed * dt;
+
+    m_camera.set_position(m_position);
 }

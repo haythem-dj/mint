@@ -28,6 +28,7 @@ set(LIB_SRCS
     src/math/matrix4.cpp
     src/platform/windows/windows_logger.cpp
     src/platform/windows/windows_window.cpp
+    src/scene/orthographic_camera.cpp
     src/render_backend/opengl/gl_renderer.cpp
     src/render_backend/opengl/gl_shader.cpp
     src/render_backend/opengl/gl_vbo.cpp

@@ -68,6 +68,11 @@ namespace mnt::math
 		return x*vector.x+y*vector.y+z*vector.z;
 	}
 
+	vector3 vector3::operator^(const vector3& vector) const
+	{
+		return vector3(y*vector.z - z*vector.y, z*vector.x - x*vector.z, x*vector.y - y*vector.x);
+	}
+
 	vector3 vector3::operator%(const vector3& vector) const
 	{
 		return vector3(x*vector.x, y*vector.y, z*vector.z);
@@ -133,5 +138,12 @@ namespace mnt::math
 	vector3 operator*(f32 scalar, const vector3& vector)
 	{
 		return vector * scalar;
+	}
+
+	vector3 normalize(const vector3& vector)
+	{
+		vector3 res = vector;
+		res.normalize();
+		return res;
 	}
 }

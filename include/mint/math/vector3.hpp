@@ -35,6 +35,8 @@ namespace mnt::math
 		vector3& operator-=(const vector3& vector);
 		
 		f32 operator*(const vector3& vector) const;
+
+		vector3 operator^(const vector3& vector) const;
 		
 		vector3 operator%(const vector3& vector) const;
 		vector3& operator%=(const vector3& vector);
@@ -52,4 +54,6 @@ namespace mnt::math
     MINT_API vector3 operator+(f32 scalar, const vector3& vector);
 	MINT_API vector3 operator-(f32 scalar, const vector3& vector);
 	MINT_API vector3 operator*(f32 scalar, const vector3& vector);
+
+	MINT_API vector3 normalize(const vector3& vector);
 }

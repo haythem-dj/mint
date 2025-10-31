@@ -12,6 +12,7 @@ public:
     void update(f32 dt) override;
     void render() override;
     void on_event(mnt::event& event) override;
+    void on_resize(u32 width, u32 height) override;
 
 private:
     mnt::engine* m_engine = nullptr;

@@ -2,6 +2,7 @@
 
 #include "mint/math/math.hpp"
 #include "mint/math/vector3.hpp"
+#include "mint/math/vector4.hpp"
 
 namespace mnt::math
 {
@@ -88,6 +89,33 @@ namespace mnt::math
         return result;
     }
 
+    vector4 matrix4::operator*(const vector4& vec) const
+    {
+        vector4 res(0.0f);
+
+        res.x += data[0][0] * vec.x;
+        res.x += data[0][1] * vec.y;
+        res.x += data[0][2] * vec.z;
+        res.x += data[0][3] * vec.w;
+
+        res.y += data[1][0] * vec.x;
+        res.y += data[1][1] * vec.y;
+        res.y += data[1][2] * vec.z;
+        res.y += data[1][3] * vec.w;
+
+        res.z += data[2][0] * vec.x;
+        res.z += data[2][1] * vec.y;
+        res.z += data[2][2] * vec.z;
+        res.z += data[2][3] * vec.w;
+
+        res.w += data[3][0] * vec.x;
+        res.w += data[3][1] * vec.y;
+        res.w += data[3][2] * vec.z;
+        res.w += data[3][3] * vec.w;
+
+        return res;
+    }
+
     matrix4 matrix4::operator%(const matrix4& mat) const
     {
         matrix4 result;
@@ -164,6 +192,23 @@ namespace mnt::math
         return *this;
     }
 
+    void matrix4::transpose()
+    {
+        for (u32 i = 0; i < 4; i++)
+            for (u32 j = i + 1; j < 4; j++)
+            {
+                f32 temp = data[i][j];
+                data[i][j] = data[j][i];
+                data[j][i] = temp;
+            }
+    }
+
+    matrix4 identity()
+    {
+        matrix4 mat;
+        return mat;
+    }
+
     matrix4 operator+(f32 scalar, const matrix4& mat)
     {
         return mat + scalar;
@@ -177,6 +222,13 @@ namespace mnt::math
     matrix4 operator*(f32 scalar, const matrix4& mat)
     {
         return mat * scalar;
+    }
+
+    matrix4 transpose(const matrix4& mat)
+    {
+        matrix4 res = mat;
+        res.transpose();
+        return res;
     }
 
     matrix4 translate(const vector3& vec)
@@ -221,5 +273,40 @@ namespace mnt::math
         });
 
         return rot_z * rot_x * rot_y;
+    }
+
+    matrix4 view(const vector3& position, const vector3& forward, const vector3& right, const vector3& up)
+    {
+        matrix4 res;
+        res[0][0] = right.x;
+        res[0][1] = right.y;
+        res[0][2] = right.z;
+        res[0][3] = -(right*position);
+
+        res[1][0] = up.x;
+        res[1][1] = up.y;
+        res[1][2] = up.z;
+        res[1][3] = -(up*position);
+
+        res[2][0] = -forward.x;
+        res[2][1] = -forward.y;
+        res[2][2] = -forward.z;
+        res[2][3] = (forward*position);
+
+        return res;
+    }
+
+    matrix4 orthographic(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far)
+    {
+        matrix4 ortho;
+        ortho[0][0] = 2.0f / (right - left);
+        ortho[1][1] = 2.0f / (top - bottom);
+        ortho[2][2] = 2.0f / (near - far);
+
+        ortho[0][3] = (right + left) / (left - right);
+        ortho[1][3] = (top + bottom) / (bottom - top);
+        ortho[2][3] = (near + far) / (near - far);
+
+        return ortho;
     }
 }

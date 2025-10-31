@@ -9,5 +9,4 @@ uniform sampler2D u_diffuse;
 void main()
 {
     o_color = texture(u_diffuse, v_tex_coords);
-    // o_color = vec4(v_tex_coords, 0.0, 1.0);
 }

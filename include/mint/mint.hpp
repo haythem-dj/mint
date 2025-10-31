@@ -30,3 +30,5 @@
 #include "mint/math/vector4.hpp"
 #include "mint/math/matrix3.hpp"
 #include "mint/math/matrix4.hpp"
+
+#include "mint/scene/orthographic_camera.hpp"
